@@ -22,8 +22,11 @@ http
 
 		if (q.pathname.includes('documentation')) {
 			filePath = __dirname + '/documentation.html';
+			console.log('URL has documentation in name.');
 		} else {
 			filePath = 'index.html';
+			console.log('URL does not have documentation in name.');
+			console.log(filePath);
 		}
 
 		fs.readFile(filePath, (err, data) => {
