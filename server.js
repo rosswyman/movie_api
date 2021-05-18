@@ -21,7 +21,7 @@ http
 		);
 
 		if (q.pathname.includes('documentation')) {
-			filePath = __dirname + '/documentation.html';
+			filePath = __dirname + '/public/documentation.html';
 			console.log('URL has documentation in name.');
 			console.log(filePath);
 		} else {
@@ -37,7 +37,7 @@ http
 
 			response.writeHead(200, { 'Content-Type': 'text/plain' });
 			response.write(data);
-			response.end;
+			response.end();
 		});
 	})
 	.listen(8080);
