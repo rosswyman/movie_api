@@ -130,14 +130,34 @@ app.get('/users', (req, res) => {
 
 app.post('/users', (req, res) => {
 	let newUser = req.body;
-	console.log(req.body);
 
 	if (!newUser.name || !newUser.email || !newUser.username) {
 		const message = 'Missing name, email, or username in request body';
 		res.status(400).send(message);
 	} else {
 		users.push(newUser);
-		res.status(201).send(newUser);
+		res.status(201).send('A new user has been created.');
+	}
+});
+
+// Changes user name
+
+app.put('/users/:name/:username', (req, res) => {
+	let user = users.find((user) => {
+		return user.name === req.params.name;
+	});
+	if (user) {
+		user.username = req.params.username;
+		res.send(
+			'Student with the name ' +
+				req.params.name +
+				' now has the username ' +
+				req.params.username
+		);
+	} else {
+		res
+			.status(404)
+			.send('Student with the name ' + req.params.name + ' was not found');
 	}
 });
 
