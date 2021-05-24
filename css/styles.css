@@ -8,10 +8,6 @@
 /* Header Styling */
 
 /* Body Styling */
-body {
-	background-color: #4b5320;
-	padding: 25px;
-}
 
 h1 {
 	font-size: x-large;
@@ -32,6 +28,19 @@ h1 {
 /* Footer Styling */
 
 /* Table Styling */
+.requests {
+	border-collapse: collapse;
+	text-align: center;
+}
+td,
+th {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+td {
+	text-align: left;
+}
 
 /* Responsive Design */
 
