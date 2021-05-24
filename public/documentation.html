@@ -4,12 +4,93 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>MovieBoom Documentation</title>
-    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="../css/styles.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    Welcome to MovieBoom, that API focused on the biggest, flashiest, and loudest action movies out there.
-    You'll be able to browse movies, get details on them, and create a favorite list so you always know what to watch next.
-    <script src="js/scripts.js"></script>
+    <h2>Welcome to MovieBoom, that API focused on the biggest, flashiest, and loudest action movies out there.</h2>
+    <p>You'll be able to browse movies, get details on them, and create a favorite list so you always know what to watch next.</p>
+    
+    <table class="requests">
+      
+        <tr>
+          <th>Business Logic</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request Body Data Format</th>
+          <th>Response Body Data Format</th>
+        </tr>         
+        <tr>
+          <td>Return a list of all movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding information about all the movies in the database</td>
+        </tr>
+        <tr>
+          <td>Return data about a single movie by title to the user</td>
+          <td>/movies/[Title]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding information about a single movie, containing description, genre, director, image URL, whether it’s featured or not</td>
+        </tr>
+        <tr>
+          <td>Return a list of movies labeled to a particular genre</td>
+          <td>/movies/genres/[Genre]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding information about all movies in a databse matching the specified genre</td>
+        </tr>
+        <tr>
+          <td>Return data about a specific director by name</td>
+          <td>/directors/[Name]</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>A JSON object holding information about a specified director</td>
+        </tr>
+        <tr>
+          <td>Allow users to register</td>
+          <td>/users/</td>
+          <td>POST</td>
+          <td>A JSON object holding data about the user, structured like:<br>
+            { <br>
+            name : "Paulina Gomez",<br>
+            email : "pgomez@gmail.com",<br>
+            username: "theGreatGomez",<br>
+            }</td>
+          <td>A text message confirming the user's new account details</td>
+        </tr>
+        <tr>
+          <td>Allow users to update username</td>
+          <td>/users/[Name]/[NewUserName]</td>
+          <td>PUT</td>
+          <td>None</td>
+          <td>A text message confirming the user's username was updated</td>
+        </tr>
+        <tr>
+          <td>Allow users to add a movie to their favorites</td>
+          <td>/users/[Name]/favoriteList/[FavoriteMovie]</td>
+          <td>PUT</td>
+          <td>None</td>
+          <td>A text message confirming the movie was added to the user's favorite list</td>
+        </tr>
+        <tr>
+          <td>Allow users to remove a movie to their favorites</td>
+          <td>/users/[Name]/favoriteList/[FavoriteMovieToRemove]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message confirming the movie was removed from the user's favorite list</td>
+        </tr>
+        <tr>
+          <td>Allow users to derigister</td>
+          <td>/users/[Name]</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message confirming the email has been removed</td>
+        </tr>
+          
+    </table>
+
+    <script src="../js/scripts.js"></script>
   </body>
 </html>
 
