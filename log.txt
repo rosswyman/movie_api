@@ -328,3 +328,27 @@ Timestamp: Tue May 18 2021 14:04:51 GMT-0500 (Central Daylight Time)
 URL: /favicon.ico
 Timestamp: Tue May 18 2021 14:04:51 GMT-0500 (Central Daylight Time)
 
+URL: /
+Timestamp: Wed May 19 2021 10:59:37 GMT-0500 (Central Daylight Time)
+
+URL: /css/styles.css
+Timestamp: Wed May 19 2021 10:59:37 GMT-0500 (Central Daylight Time)
+
+URL: /js/scripts.js
+Timestamp: Wed May 19 2021 10:59:37 GMT-0500 (Central Daylight Time)
+
+URL: /favicon.ico
+Timestamp: Wed May 19 2021 10:59:42 GMT-0500 (Central Daylight Time)
+
+URL: /documentation
+Timestamp: Wed May 19 2021 10:59:46 GMT-0500 (Central Daylight Time)
+
+URL: /css/styles.css
+Timestamp: Wed May 19 2021 10:59:46 GMT-0500 (Central Daylight Time)
+
+URL: /js/scripts.js
+Timestamp: Wed May 19 2021 10:59:46 GMT-0500 (Central Daylight Time)
+
+URL: /favicon.ico
+Timestamp: Wed May 19 2021 10:59:51 GMT-0500 (Central Daylight Time)
+
