@@ -122,11 +122,13 @@ app.get('/directors/:name', (req, res) => {
 	);
 });
 
-// Adds a new user
+// Get list of all users
 
 app.get('/users', (req, res) => {
 	res.json(users);
 });
+
+// Adds a new user
 
 app.post('/users', (req, res) => {
 	let newUser = req.body;
@@ -177,10 +179,36 @@ app.put('/users/:name/favoriteList/:movie', (req, res) => {
 				req.params.movie +
 				' to his or her favorites list.'
 		);
+		console.log(favoriteList);
 	} else {
 		res
 			.status(404)
 			.send('User with the name ' + req.params.name + ' was not found');
+	}
+});
+
+// Get user's favorite list
+
+app.get('/users/:name/favoriteList/', (req, res) => {
+	res.json(
+		users.find((user) => {
+			return user.name === req.params.name;
+		})
+	);
+});
+
+// Deletes a movie from favorites list
+
+app.delete('/users/:name/favoriteList/:movie', (req, res) => {
+	let user = users.find((user) => {
+		return user.name === req.params.name;
+	});
+
+	if (user) {
+		favoriteList = favoriteList.filter((obj) => {
+			return obj.movie !== req.params.movie;
+		});
+		res.status(201).send('Moive title ' + req.params.movie + ' was deleted.');
 	}
 });
 
