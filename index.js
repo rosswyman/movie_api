@@ -149,7 +149,7 @@ app.put('/users/:name/:username', (req, res) => {
 	if (user) {
 		user.username = req.params.username;
 		res.send(
-			'Student with the name ' +
+			'User with the name ' +
 				req.params.name +
 				' now has the username ' +
 				req.params.username
@@ -157,7 +157,30 @@ app.put('/users/:name/:username', (req, res) => {
 	} else {
 		res
 			.status(404)
-			.send('Student with the name ' + req.params.name + ' was not found');
+			.send('User with the name ' + req.params.name + ' was not found');
+	}
+});
+
+// Add movie to user's favorite list
+
+app.put('/users/:name/favoriteList/:movie', (req, res) => {
+	let favoriteList = [];
+	let user = users.find((user) => {
+		return user.name === req.params.name;
+	});
+	if (user) {
+		favoriteList.push(req.params.movie);
+		res.send(
+			'User with the name ' +
+				req.params.name +
+				' has added the movie ' +
+				req.params.movie +
+				' to his or her favorites list.'
+		);
+	} else {
+		res
+			.status(404)
+			.send('User with the name ' + req.params.name + ' was not found');
 	}
 });
 
