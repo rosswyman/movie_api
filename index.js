@@ -171,13 +171,12 @@ app.put('/users/:name/favoriteList/:movie', (req, res) => {
 		return user.name === req.params.name;
 	});
 	if (user) {
-		favoriteList.push(req.params.movie);
 		res.send(
 			'User with the name ' +
 				req.params.name +
 				' has added the movie ' +
 				req.params.movie +
-				' to his or her favorites list.'
+				' to his or her favorites list, but I do not know how to manage that list yet.'
 		);
 		console.log(favoriteList);
 	} else {
@@ -205,10 +204,13 @@ app.delete('/users/:name/favoriteList/:movie', (req, res) => {
 	});
 
 	if (user) {
-		favoriteList = favoriteList.filter((obj) => {
-			return obj.movie !== req.params.movie;
-		});
-		res.status(201).send('Moive title ' + req.params.movie + ' was deleted.');
+		res
+			.status(201)
+			.send(
+				'Movie title ' +
+					req.params.movie +
+					' was deleted from the favorite list.'
+			);
 	}
 });
 
