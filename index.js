@@ -142,6 +142,22 @@ app.post('/users', (req, res) => {
 	}
 });
 
+// Deletes a user
+
+app.delete('/users/:name', (req, res) => {
+	let user = users.find((user) => {
+		return user.name === req.params.name;
+	});
+
+	if (user) {
+		users = users.filter((obj) => {
+			return obj.name !== req.params.name;
+		});
+
+		res.status(201).send('User has been deleted');
+	}
+});
+
 // Changes user name
 
 app.put('/users/:name/:username', (req, res) => {
