@@ -1,11 +1,21 @@
 const express = require('express'),
 	morgan = require('morgan'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	mongoose = require('mongoose'),
+	Models = require('./models.js');
 
 const app = express();
-
 app.use(bodyParser.json());
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
 app.use(morgan('common'));
+
+mongoose.connect('mongodb://localhost:27017/movieBoomDB', {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 let topMovies = [
 	{
