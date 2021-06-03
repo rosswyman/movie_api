@@ -2,7 +2,7 @@ const express = require('express'),
 	morgan = require('morgan'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
-	Models = require('./models.js');
+	Models = require('./models/models.js');
 
 const app = express();
 app.use(bodyParser.json());
@@ -139,17 +139,40 @@ app.get('/users', (req, res) => {
 });
 
 // Adds a new user
+/* User to be submitted in JSON format
+{
+	ID: Integer,
+	Username: String,
+	Password: String,
+	Email: String,
+	Birthday: Date
+  }*/
 
 app.post('/users', (req, res) => {
-	let newUser = req.body;
-
-	if (!newUser.name || !newUser.email || !newUser.username) {
-		const message = 'Missing name, email, or username in request body';
-		res.status(400).send(message);
-	} else {
-		users.push(newUser);
-		res.status(201).send('A new user has been created.');
-	}
+	Users.findOne({ Username: req.body.Username })
+		.then((user) => {
+			if (user) {
+				return res.status(400).send(req.body.Username + ' already exists');
+			} else {
+				Users.create({
+					Username: req.body.Username,
+					Password: req.body.Password,
+					Email: req.body.Email,
+					Birthday: req.body.Birthday,
+				})
+					.then((user) => {
+						res.status(201).json(user);
+					})
+					.catch((error) => {
+						console.error(error);
+						res.status(500).send('Error: ' + error);
+					});
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
 // Deletes a user
