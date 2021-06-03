@@ -214,23 +214,35 @@ app.delete('/users/:name', (req, res) => {
 
 // Changes user name
 
-app.put('/users/:name/:username', (req, res) => {
-	let user = users.find((user) => {
-		return user.name === req.params.name;
-	});
-	if (user) {
-		user.username = req.params.username;
-		res.send(
-			'User with the name ' +
-				req.params.name +
-				' now has the username ' +
-				req.params.username
-		);
-	} else {
-		res
-			.status(404)
-			.send('User with the name ' + req.params.name + ' was not found');
-	}
+/* User to be submitted in JSON format
+{
+	Username: String, (required)
+	Password: String, (required)
+	Email: String, (required)
+	Birthday: Date
+  }*/
+
+app.put('/users/:Username', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$set: {
+				Username: req.body.Username,
+				Password: req.body.Password,
+				Email: req.body.Email,
+				Birthday: req.body.Birthday,
+			},
+		},
+		{ new: true }, // This line makes sure that the updated document is returned
+		(err, updatedUser) => {
+			if (err) {
+				console.error(err);
+				res.status(500).send('Error: ' + err);
+			} else {
+				res.json(updatedUser);
+			}
+		}
+	);
 });
 
 // Add movie to user's favorite list
