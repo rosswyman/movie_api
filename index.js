@@ -186,7 +186,7 @@ app.post('/users', (req, res) => {
 // Get details on user by username
 
 app.get('/users/:Username', (req, res) => {
-	Users.findOne({ Username: req.parama.Username })
+	Users.findOne({ Username: req.params.Username })
 		.then((user) => {
 			res.json(user);
 		})
