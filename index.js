@@ -129,20 +129,17 @@ app.get('/movies/genres/:genre', (req, res) => {
 		});
 });
 
-// Returns all directors
-
-app.get('/directors', (req, res) => {
-	res.json(directors);
-});
-
 // Returns details on a specific director
 
-app.get('/directors/:name', (req, res) => {
-	res.json(
-		directors.find((director) => {
-			return director.name === req.params.name;
+app.get('/directors/:director', (req, res) => {
+	Movies.findOne({ 'Director.Name': req.params.director })
+		.then((director) => {
+			res.status(201).json(director);
 		})
-	);
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
 // Get list of all users
@@ -225,7 +222,7 @@ app.delete('/users/:name', (req, res) => {
 	}
 });
 
-// Changes user name
+// Changes user info
 
 /* User to be submitted in JSON format
 {
