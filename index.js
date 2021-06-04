@@ -93,7 +93,14 @@ app.get('/', (req, res) => {
 // Returns all movies
 
 app.get('/movies', (req, res) => {
-	res.json(topMovies);
+	Movies.find()
+		.then((movies) => {
+			res.status(201).json(movies);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
 // Returns information on a specific movie
