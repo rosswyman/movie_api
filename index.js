@@ -247,25 +247,22 @@ app.put('/users/:Username', (req, res) => {
 
 // Add movie to user's favorite list
 
-app.put('/users/:name/favoriteList/:movie', (req, res) => {
-	let favoriteList = [];
-	let user = users.find((user) => {
-		return user.name === req.params.name;
-	});
-	if (user) {
-		res.send(
-			'User with the name ' +
-				req.params.name +
-				' has added the movie ' +
-				req.params.movie +
-				' to his or her favorites list, but I do not know how to manage that list yet.'
-		);
-		console.log(favoriteList);
-	} else {
-		res
-			.status(404)
-			.send('User with the name ' + req.params.name + ' was not found');
-	}
+app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$push: { FavoriteMovies: req.params.MovieID },
+		},
+		{ new: true }, // This line makes sure that the updated document is returned
+		(err, updatedUser) => {
+			if (err) {
+				console.error(err);
+				res.status(500).send('Error: ' + err);
+			} else {
+				res.json(updatedUser);
+			}
+		}
+	);
 });
 
 // Get user's favorite list
