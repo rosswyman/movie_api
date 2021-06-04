@@ -179,7 +179,10 @@ app.post('/users', (req, res) => {
 					Birthday: req.body.Birthday,
 				})
 					.then((user) => {
-						res.status(201).json(user);
+						res
+							.status(201)
+							.send(req.body.Username + ' added')
+							.json(user);
 					})
 					.catch((error) => {
 						console.error(error);
@@ -276,32 +279,24 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 	);
 });
 
-// Get user's favorite list
-
-app.get('/users/:name/favoriteList/', (req, res) => {
-	res.json(
-		users.find((user) => {
-			return user.name === req.params.name;
-		})
-	);
-});
-
 // Deletes a movie from favorites list
 
-app.delete('/users/:name/favoriteList/:movie', (req, res) => {
-	let user = users.find((user) => {
-		return user.name === req.params.name;
-	});
-
-	if (user) {
-		res
-			.status(201)
-			.send(
-				'Movie title ' +
-					req.params.movie +
-					' was deleted from the favorite list.'
-			);
-	}
+app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$pull: { FavoriteMovies: req.params.MovieID },
+		},
+		{ new: true }, // This line makes sure that the updated document is returned
+		(err, updatedUser) => {
+			if (err) {
+				console.error(err);
+				res.status(500).send('Error: ' + err);
+			} else {
+				res.json(updatedUser);
+			}
+		}
+	);
 });
 
 // STATIC
