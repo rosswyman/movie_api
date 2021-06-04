@@ -179,10 +179,7 @@ app.post('/users', (req, res) => {
 					Birthday: req.body.Birthday,
 				})
 					.then((user) => {
-						res
-							.status(201)
-							.send(req.body.Username + ' added')
-							.json(user);
+						res.status(201).json(user);
 					})
 					.catch((error) => {
 						console.error(error);
