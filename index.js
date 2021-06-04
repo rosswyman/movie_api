@@ -119,11 +119,14 @@ app.get('/movies/:Title', (req, res) => {
 // // Returns a list of movies matching a specified genre
 
 app.get('/movies/genres/:genre', (req, res) => {
-	res.json(
-		topMovies.filter((movie) => {
-			return movie.genre === req.params.genre;
+	Movies.find({ 'Genre.Name': req.params.genre })
+		.then((movies) => {
+			res.status(201).json(movies);
 		})
-	);
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
 // Returns all directors
