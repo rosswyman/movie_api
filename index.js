@@ -208,18 +208,19 @@ app.get('/users/:Username', (req, res) => {
 
 // Deletes a user
 
-app.delete('/users/:name', (req, res) => {
-	let user = users.find((user) => {
-		return user.name === req.params.name;
-	});
-
-	if (user) {
-		users = users.filter((obj) => {
-			return obj.name !== req.params.name;
+app.delete('/users/:Username', (req, res) => {
+	Users.findOneAndRemove({ Username: req.params.Username })
+		.then((user) => {
+			if (!user) {
+				res.status(400).send(req.params.Username + ' was not found');
+			} else {
+				res.status(200).send(req.params.Username + ' was deleted.');
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
 		});
-
-		res.status(201).send('User has been deleted');
-	}
 });
 
 // Changes user info
