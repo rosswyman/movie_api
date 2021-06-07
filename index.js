@@ -270,7 +270,8 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 				console.error(err);
 				res.status(500).send('Error: ' + err);
 			} else {
-				res.json(updatedUser);
+				// res.json(updatedUser);
+				res.send('Movie added to favorites.');
 			}
 		}
 	);
@@ -278,7 +279,7 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 
 // Deletes a movie from favorites list
 
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+app.post('/users/:Username/Movies/remove/:MovieID', (req, res) => {
 	Users.findOneAndUpdate(
 		{ Username: req.params.Username },
 		{
@@ -290,7 +291,8 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 				console.error(err);
 				res.status(500).send('Error: ' + err);
 			} else {
-				res.json(updatedUser);
+				// res.json(updatedUser);
+				res.send('Movie was removed from favorites list.');
 			}
 		}
 	);
