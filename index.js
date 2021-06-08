@@ -22,69 +22,6 @@ mongoose.connect('mongodb://localhost:27017/movieBoomDB', {
 	useUnifiedTopology: true,
 });
 
-let topMovies = [
-	{
-		title: 'The Rock',
-		director: 'Michael Bay',
-		description:
-			'A mild-mannered chemist and an ex-con must lead the counterstrike when a rogue group of military men, led by a renegade general, threaten a nerve gas attack from Alcatraz against San Francisco.',
-		imageURL: 'https://www.imdb.com/title/tt0117500/mediaviewer/rm2777683456/',
-		genre: 'Action',
-		isFeatured: 'Yes',
-	},
-	{
-		title: 'The Great Escape',
-		director: 'John Sturges',
-		description:
-			'Allied prisoners of war plan for several hundred of their number to escape from a German camp during World War II.',
-		imageURL: 'https://www.imdb.com/title/tt0057115/mediaviewer/rm4173733632/',
-		genre: 'Thriller',
-		isFeatured: 'No',
-	},
-	{
-		title: 'Top Gun',
-		director: 'Tony Scott',
-		description:
-			"As students at the United States Navy's elite fighter weapons school compete to be best in the class, one daring young pilot learns a few things from a civilian instructor that are not taught in the classroom.",
-		imageURL: 'https://www.imdb.com/title/tt0092099/mediaviewer/rm2145457920/',
-		genre: 'Action',
-		isFeatured: 'No',
-	},
-	{
-		title: 'Die Hard',
-		director: 'John McTiernan',
-		description:
-			'An NYPD officer tries to save his wife and several others taken hostage by German terrorists during a Christmas party at the Nakatomi Plaza in Los Angeles.',
-		imageURL: 'https://www.imdb.com/title/tt0095016/mediaviewer/rm270892032/',
-		genre: 'Action',
-		isFeatured: 'No',
-	},
-	{
-		title: 'Predator',
-		director: 'John McTiernan',
-		description:
-			'A team of commandos on a mission in a Central American jungle find themselves hunted by an extraterrestrial warrior.',
-		imageURL: 'https://www.imdb.com/title/tt0093773/mediaviewer/rm35588864/',
-		genre: 'Action',
-		isFeatured: 'No',
-	},
-];
-
-let directors = [
-	{
-		name: 'Michael Bay',
-		bio: 'Know and Michael "Boom-Boom" Bay...',
-		birthYear: '1965',
-		deathYear: 'NA',
-	},
-	{
-		name: 'John Sturges',
-		bio: 'Famous for his western movies...',
-		birthYear: '1910',
-		deathYear: '1992',
-	},
-];
-
 let users = [];
 
 // Requests
