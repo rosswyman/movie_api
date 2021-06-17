@@ -5,6 +5,8 @@ const express = require('express'),
 	Models = require('./models/models.js'),
 	cors = require('cors');
 
+const { check, validationResult } = require('express-validator');
+
 const app = express();
 app.use(bodyParser.json());
 // app.use(cors()); // This would allow requests from all domains
@@ -143,32 +145,51 @@ app.get('/users', (req, res) => {
 	Birthday: Date
   }*/
 
-app.post('/users', (req, res) => {
-	Users.findOne({ Username: req.body.Username })
-		.then((user) => {
-			if (user) {
-				return res.status(400).send(req.body.Username + ' already exists');
-			} else {
-				Users.create({
-					Username: req.body.Username,
-					Password: req.body.Password,
-					Email: req.body.Email,
-					Birthday: req.body.Birthday,
-				})
-					.then((user) => {
-						res.status(201).json(user);
+app.post(
+	'/users',
+	[
+		check('Username', 'Username is required').isLength({ min: 5 }),
+		check(
+			'Username',
+			'Username contains non alphanumeric characrers - that is not allowed.'
+		).isAlphanumeric(),
+		check('Passowrd', 'Password is required').not().isEmpty(),
+		check('Email', 'Email does not appear to be valid').isEmail(),
+	],
+	(req, res) => {
+		// check the validatoin object for errors
+		let errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return res.status(422).json({ errors: errors.array() });
+		}
+		let hashedPassword = Users.hashPassword(req.body.Password);
+		Users.findOne({ Username: req.body.Username })
+			.then((user) => {
+				if (user) {
+					return res.status(400).send(req.body.Username + ' already exists');
+				} else {
+					Users.create({
+						Username: req.body.Username,
+						Password: hashedPassword,
+						Email: req.body.Email,
+						Birthday: req.body.Birthday,
 					})
-					.catch((error) => {
-						console.error(error);
-						res.status(500).send('Error: ' + error);
-					});
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-			res.status(500).send('Error: ' + error);
-		});
-});
+						.then((user) => {
+							res.status(201).json(user);
+						})
+						.catch((error) => {
+							console.error(error);
+							res.status(500).send('Error: ' + error);
+						});
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+				res.status(500).send('Error: ' + error);
+			});
+	}
+);
 
 // Get details on user by username
 
