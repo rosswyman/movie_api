@@ -9,7 +9,7 @@ const { check, validationResult } = require('express-validator');
 
 const app = express();
 app.use(bodyParser.json());
-// app.use(cors()); // This would allow requests from all domains
+app.use(cors()); // This would allow requests from all domains
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
@@ -162,7 +162,7 @@ app.post(
 		check('Email', 'Email does not appear to be valid').isEmail(),
 	],
 	(req, res) => {
-		// check the validatoin object for errors
+		// check the validation object for errors
 		let errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
