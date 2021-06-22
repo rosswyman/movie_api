@@ -7,9 +7,10 @@ const express = require('express'),
 	passport = require('passport');
 const { check, validationResult } = require('express-validator');
 require('./passport');
-let auth = require('./auth')(app);
+
 const app = express();
 app.use(bodyParser.json());
+let auth = require('./auth')(app);
 app.use(cors()); // This would allow requests from all domains
 const Movies = Models.Movie;
 const Users = Models.User;
