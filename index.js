@@ -4,7 +4,7 @@ const express = require('express'),
 	mongoose = require('mongoose'),
 	Models = require('./models/models.js'),
 	cors = require('cors'),
-	const passport = require('passport');
+	passport = require('passport');
 const { check, validationResult } = require('express-validator');
 require('./passport');
 let auth = require('./auth')(app);
