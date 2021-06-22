@@ -3,32 +3,63 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
 	Models = require('./models/models.js'),
-	cors = require('cors'),
-	const passport = require('passport');
+	cors = require('cors');
+
 const { check, validationResult } = require('express-validator');
-require('./passport');
-let auth = require('./auth')(app);
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors()); // This would allow requests from all domains
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(
+	cors({
+		origin: (origin, callback) => {
+			if (!origin) return callback(null, true);
+			if (allowedOrigins.indexOf(origin) === -1) {
+				let message =
+					'The CORS policy for this application does not allow access from the origin ' +
+					origin;
+				return callback(new Error(message), false);
+			}
+			return callback(null, true);
+		},
+	})
+);
+
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+
 const Movies = Models.Movie;
 const Users = Models.User;
+
 app.use(morgan('common'));
+
 // mongoose.connect('mongodb://localhost:27017/movieBoomDB', {
 // 	useNewUrlParser: true,
 // 	useUnifiedTopology: true,
 // });
+
 mongoose.connect(process.env.CONNECTION_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
+
+let users = [];
+
 // Requests
+
 app.get('/', (req, res) => {
 	res.send(
 		'Are you ready to have your mind BLOWN by some of the best action movies of all time?'
 	);
 });
+
 // Returns all movies
+
 app.get(
 	'/movies',
 	passport.authenticate('jwt', { session: false }),
@@ -43,7 +74,9 @@ app.get(
 			});
 	}
 );
+
 // Returns information on a specific movie
+
 app.get(
 	'/movies/:Title',
 	passport.authenticate('jwt', { session: false }),
@@ -58,7 +91,9 @@ app.get(
 			});
 	}
 );
+
 // // Returns a list of movies matching a specified genre
+
 app.get(
 	'/movies/genres/:genre',
 	passport.authenticate('jwt', { session: false }),
@@ -73,7 +108,9 @@ app.get(
 			});
 	}
 );
+
 // Returns details on a specific director
+
 app.get(
 	'/directors/:director',
 	passport.authenticate('jwt', { session: false }),
@@ -88,7 +125,9 @@ app.get(
 			});
 	}
 );
+
 // Get list of all users
+
 app.get('/users', (req, res) => {
 	Users.find()
 		.then((users) => {
@@ -99,7 +138,9 @@ app.get('/users', (req, res) => {
 			res.status(500).send('Error: ' + err);
 		});
 });
+
 // Adds a new user
+
 /* User to be submitted in JSON format
 {
 	ID: Integer,
@@ -108,6 +149,7 @@ app.get('/users', (req, res) => {
 	Email: String,
 	Birthday: Date
   }*/
+
 app.post(
 	'/users',
 	[
@@ -122,6 +164,7 @@ app.post(
 	(req, res) => {
 		// check the validation object for errors
 		let errors = validationResult(req);
+
 		if (!errors.isEmpty()) {
 			return res.status(422).json({ errors: errors.array() });
 		}
@@ -152,7 +195,9 @@ app.post(
 			});
 	}
 );
+
 // Get details on user by username
+
 // app.get(
 // 	'/users/:Username',
 // 	passport.authenticate('jwt', { session: false }),
@@ -167,6 +212,7 @@ app.post(
 // 			});
 // 	}
 // );
+
 app.get('/users/:Username', (req, res) => {
 	Users.findOne({ Username: req.params.Username })
 		.then((user) => {
@@ -177,7 +223,9 @@ app.get('/users/:Username', (req, res) => {
 			res.status(500).send('Error: ' + err);
 		});
 });
+
 // Deletes a user
+
 app.delete(
 	'/users/:Username',
 	passport.authenticate('jwt', { session: false }),
@@ -196,7 +244,9 @@ app.delete(
 			});
 	}
 );
+
 // Changes user info
+
 /* User to be submitted in JSON format
 {
 	Username: String, (required)
@@ -204,6 +254,7 @@ app.delete(
 	Email: String, (required)
 	Birthday: Date
   }*/
+
 app.put(
 	'/users/:Username',
 	passport.authenticate('jwt', { session: false }),
@@ -230,7 +281,9 @@ app.put(
 		);
 	}
 );
+
 // Add movie to user's favorite list
+
 app.post(
 	'/users/:Username/Movies/:MovieID',
 	passport.authenticate('jwt', { session: false }),
@@ -253,7 +306,9 @@ app.post(
 		);
 	}
 );
+
 // Deletes a movie from favorites list
+
 app.post(
 	'/users/:Username/Movies/remove/:MovieID',
 	passport.authenticate('jwt', { session: false }),
@@ -276,13 +331,17 @@ app.post(
 		);
 	}
 );
+
 // STATIC
+
 app.use(express.static('public'));
+
 // Logging
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
 	console.log('Listening on Port ' + port);
 });
+
 // Error Handling
 app.use((err, req, res, next) => {
 	console.error(err.stack);
