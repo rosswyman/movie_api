@@ -42,6 +42,9 @@ app.get(
 	'/movies',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
+		res.header('Access-Control-Allow-Origin', '*');
+		res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+
 		Movies.find()
 			.then((movies) => {
 				res.status(201).json(movies);
