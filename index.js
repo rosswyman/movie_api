@@ -12,9 +12,8 @@ require('./passport');
 
 const app = express();
 app.use(bodyParser.json());
-let auth = require('./auth')(app);
 app.use(cors()); // This would allow requests from all domains
-
+let auth = require('./auth')(app);
 app.use(morgan('common'));
 // mongoose.connect('mongodb://localhost:27017/movieBoomDB', {
 // 	useNewUrlParser: true,
