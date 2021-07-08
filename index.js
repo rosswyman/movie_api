@@ -3,6 +3,8 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	mongoose = require('mongoose'),
 	Models = require('./models/models.js'),
+	Movies = Models.Movie,
+	Users = Models.User,
 	cors = require('cors'),
 	passport = require('passport');
 const { check, validationResult } = require('express-validator');
@@ -12,8 +14,7 @@ const app = express();
 app.use(bodyParser.json());
 let auth = require('./auth')(app);
 app.use(cors()); // This would allow requests from all domains
-const Movies = Models.Movie;
-const Users = Models.User;
+
 app.use(morgan('common'));
 // mongoose.connect('mongodb://localhost:27017/movieBoomDB', {
 // 	useNewUrlParser: true,
