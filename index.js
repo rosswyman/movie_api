@@ -32,12 +32,6 @@ app.all('/', function (req, res, next) {
 	next();
 });
 
-app.post('/login', function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-	next();
-});
-
 app.get('/', (req, res) => {
 	res.send(
 		'Are you ready to have your mind BLOWN by some of the best action movies of all time?'
