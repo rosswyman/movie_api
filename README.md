@@ -3,7 +3,7 @@ movie_api
 Tools:
 NodeJS
 Express
-Mongoonse
+Mongoose
 Passport
 
 Description:
