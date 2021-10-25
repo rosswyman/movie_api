@@ -11,3 +11,6 @@ The purpose of this web application is to give the client access to movie inform
 
 Documentaion:
 Documentation, including endpoints, can be found in the public documentation.html file.
+
+Hosting:
+The online version of this API is deployed at https://movieboom.herokuapp.com/
